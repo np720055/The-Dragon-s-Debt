@@ -1,109 +1,175 @@
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Player : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
-    public Sprite[] idleSprites;
-    public Sprite[] runSprites;
-    public Sprite[] jumpSprites;
-    public float speed = 5f;
-    public float jumpForce = 7f;
-    public float animationSpeed = 0.15f;
+    // Player movement and sprite control
+    public Sprite[] idleSprites; // Array for idle animation sprites
+    public Sprite[] runSprites;  // Array for run animation sprites
+    public Sprite[] jumpSprites; // Array for jump animation sprites
+    public Sprite[] attackSet1; // Array for attack set 1 animation sprites
+
+    public float moveSpeed = 5f;
+    public float jumpForce = 5f;
 
     private SpriteRenderer spriteRenderer;
     private Rigidbody2D rb;
-    private Vector3 direction;
-    private int spriteIndex;
-    private string currentState = "Idle"; // Tracks current animation state
-    private bool isJumping = false;
+    private bool isJumping;
+    private bool isRunning;
+    private bool isGrounded;
+    private bool isAttacking;
 
-    private void Awake()
+    private float horizontal;
+    private float timeSinceLastFrame = 0f;
+    private int idleFrame = 0;
+    private int runFrame = 0;
+    private int jumpFrame = 0;
+    private int attackFrame = 0;
+
+    private float attackCooldown = 0.5f; // Time between attacks (in seconds)
+    private float attackTimer = 0f; // Timer to track cooldown
+
+    void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
-
-        // Set gravity scale to 0 to prevent automatic falling (we will control gravity manually)
-        rb.gravityScale = 0;
-
-        // Set player size via Transform scale
-        transform.localScale = new Vector3(3.3f, 3.3f, 3.3f); // Set the player size as needed
     }
 
-    private void Start()
+    void Update()
     {
-        InvokeRepeating(nameof(AnimateSprite), animationSpeed, animationSpeed);
-    }
+        horizontal = Input.GetAxis("Horizontal");
 
-    private void Update()
-    {
-        float move = Input.GetAxisRaw("Horizontal");
-
-        // Move character
-        rb.velocity = new Vector2(move * speed, rb.velocity.y);
-
-        // Flip character based on direction
-        if (move != 0)
+        // Update attack cooldown timer
+        if (attackTimer > 0f)
         {
-            transform.localScale = new Vector3(Mathf.Sign(move), 1, 1);
+            attackTimer -= Time.deltaTime;
         }
 
-        // Change animation based on movement
-        if (rb.velocity.y > 0.1f)
+        // Check if grounded (player is touching the ground)
+        isGrounded = Mathf.Abs(rb.velocity.y) < 0.1f;
+
+        // Handle movement and jumping
+        if (isGrounded)
         {
-            SetAnimation("Jump");
+            if (horizontal != 0)
+            {
+                isRunning = true;
+                // Flip sprite based on direction
+                if (horizontal < 0)
+                {
+                    spriteRenderer.flipX = true;  // Flip sprite when moving left
+                }
+                else
+                {
+                    spriteRenderer.flipX = false; // Keep sprite facing right when moving right
+                }
+            }
+            else
+            {
+                isRunning = false;
+            }
+
+            // Jumping
+            if (Input.GetButtonDown("Jump") && isGrounded)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce); // Apply jump force
+                isJumping = true;
+            }
+            else
+            {
+                isJumping = false;
+            }
         }
-        else if (move != 0)
+
+        // Attack logic (press 'E' key)
+        if (Input.GetKeyDown(KeyCode.E) && attackTimer <= 0f) // Press 'E' key and cooldown check
         {
-            SetAnimation("Run");
+            isAttacking = true;
+            attackTimer = attackCooldown; // Reset attack cooldown
+            Debug.Log("Attack triggered"); // Debugging log for attack trigger
         }
         else
         {
-            SetAnimation("Idle");
+            isAttacking = false;
         }
 
-        // Jump input
-        if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
+        // Update sprite based on state
+        if (isAttacking)
         {
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-            rb.gravityScale = 1; // Enable gravity when jumping
-            isJumping = true;
+            AnimateAttack();
+        }
+        else if (isJumping)
+        {
+            AnimateJump();
+        }
+        else if (isRunning)
+        {
+            AnimateRun();
+        }
+        else
+        {
+            AnimateIdle();
         }
 
-        // If the player is in the air and not jumping anymore, apply gravity effect
-        if (isJumping && rb.velocity.y < 0)
+        // Apply horizontal movement
+        rb.velocity = new Vector2(horizontal * moveSpeed, rb.velocity.y);
+    }
+
+    void AnimateIdle()
+    {
+        timeSinceLastFrame += Time.deltaTime;
+        if (timeSinceLastFrame >= 0.1f) // Change sprite every 0.1 seconds
         {
-            rb.gravityScale = 1; // Enable gravity to make the player fall
-        }
-        else if (isJumping && rb.velocity.y > 0)
-        {
-            rb.gravityScale = 0.5f; // Apply lighter gravity while going up (optional, can be adjusted)
+            idleFrame = (idleFrame + 1) % idleSprites.Length;
+            spriteRenderer.sprite = idleSprites[idleFrame];
+            timeSinceLastFrame = 0f;
         }
     }
 
-    private void SetAnimation(string newState)
+    void AnimateRun()
     {
-        if (currentState == newState) return;
-        currentState = newState;
-        spriteIndex = 0;
-    }
-
-    private void AnimateSprite()
-    {
-        Sprite[] currentSprites = idleSprites;
-
-        if (currentState == "Run") currentSprites = runSprites;
-        if (currentState == "Jump") currentSprites = jumpSprites;
-
-        if (currentSprites.Length > 0)
+        timeSinceLastFrame += Time.deltaTime;
+        if (timeSinceLastFrame >= 0.1f) // Change sprite every 0.1 seconds
         {
-            spriteIndex = (spriteIndex + 1) % currentSprites.Length;
-            spriteRenderer.sprite = currentSprites[spriteIndex];
+            runFrame = (runFrame + 1) % runSprites.Length;
+            spriteRenderer.sprite = runSprites[runFrame];
+            timeSinceLastFrame = 0f;
         }
     }
 
-    private bool IsGrounded()
+    void AnimateJump()
     {
-        // Use a small raycast downward from the player's feet to check if grounded
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.1f);
-        return hit.collider != null;
+        // You can add logic here for jumping animation if needed.
+        // This example assumes you only display the jump sprite.
+        spriteRenderer.sprite = jumpSprites[0];
+    }
+
+    void AnimateAttack()
+    {
+        // Log to check if we enter this function
+        Debug.Log("Animating attack");
+
+        timeSinceLastFrame += Time.deltaTime;
+
+        // Slowing down the animation to 0.2 seconds per frame
+        if (timeSinceLastFrame >= 0.2f)
+        {
+            if (attackSet1.Length > 0)
+            {
+                attackFrame = (attackFrame + 1) % attackSet1.Length; // Cycle through attackSet1 sprites
+                spriteRenderer.sprite = attackSet1[attackFrame];
+
+                // Log to check which sprite is being used
+                Debug.Log("Current Attack Sprite: " + attackSet1[attackFrame].name);
+            }
+
+            timeSinceLastFrame = 0f;
+        }
+    }
+
+    void Attack()
+    {
+        // This function can be used to handle attack-specific logic, 
+        // like dealing damage, playing sounds, etc.
+        // Animation will be handled by AnimateAttack().
     }
 }

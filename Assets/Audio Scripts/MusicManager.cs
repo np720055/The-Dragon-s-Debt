@@ -3,11 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MusicManager : MonoBehaviour
 {
     private static MusicManager Instance;
-    private AudioSoure audioSource;
+    private AudioSource audioSource;
     public AudioClip backgroundMusic;
     
 
@@ -15,26 +16,29 @@ public class MusicManager : MonoBehaviour
     {
         if (Instance == null)
         {
-            Instance == this;
+            Instance = this;
             audioSource = GetComponent<AudioSource>();
-            DontDestoryOnLoad(gameObject);
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
-            Destory(gameObject);
+            Destroy(gameObject);
         }
     }
     // Start is called before the first frame update
     void Start()
     {
-        
+        if(backgroundMusic!= null)
+        {
+            PlayerBackgroundMusic(false);
+        }
     }
 
     public void PlayerBackgroundMusic(bool resetSong, AudioClip audioClip = null)
     {
         if (audioClip != null)
         {
-            audioSource = audioClip;
+            audioClip = null;
         }
         else if (audioSource.clip != null)
        
@@ -47,6 +51,8 @@ public class MusicManager : MonoBehaviour
         }
             
     }
+
+   
     public void PauseBackgroundMusic()
         {
             audioSource.Pause();

@@ -2,31 +2,42 @@
 
 public class PlayerController : MonoBehaviour
 {
-    // Player movement and sprite control
-    public Sprite[] idleSprites; // Array for idle animation sprites
-    public Sprite[] runSprites;  // Array for run animation sprites
-    public Sprite[] jumpSprites; // Array for jump animation sprites
-    public Sprite[] attackSet1; // Array for attack set 1 animation sprites
+    // Sprites
+    public Sprite[] idleSprites;
+    public Sprite[] runSprites;
+    public Sprite[] jumpSprites;
+    public Sprite[] attackSet1; // Light attack
+    public Sprite[] attackSet2; // Heavy attack
 
     public float moveSpeed = 5f;
     public float jumpForce = 5f;
 
     private SpriteRenderer spriteRenderer;
     private Rigidbody2D rb;
-    private bool isJumping;
+
+    private float horizontal;
     private bool isRunning;
+    private bool isJumping;
     private bool isGrounded;
     private bool isAttacking;
 
-    private float horizontal;
+    // Animation timers/frames
     private float timeSinceLastFrame = 0f;
     private int idleFrame = 0;
     private int runFrame = 0;
     private int jumpFrame = 0;
     private int attackFrame = 0;
 
-    private float attackCooldown = 0.5f; // Time between attacks (in seconds)
-    private float attackTimer = 0f; // Timer to track cooldown
+    // Attack logic
+    private float attackCooldown = 0.5f;
+    private float attackTimer = 0f;
+
+    private float eKeyHeldTime = 0f;
+    private float holdThreshold = 0.5f;
+    private bool holdTriggered = false;
+
+    private enum AttackType { None, Light, Heavy }
+    private AttackType currentAttack = AttackType.None;
 
     void Start()
     {
@@ -37,62 +48,66 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         horizontal = Input.GetAxis("Horizontal");
+        isGrounded = Mathf.Abs(rb.velocity.y) < 0.1f;
 
-        // Update attack cooldown timer
+        // Update attack cooldown
         if (attackTimer > 0f)
         {
             attackTimer -= Time.deltaTime;
         }
 
-        // Check if grounded (player is touching the ground)
-        isGrounded = Mathf.Abs(rb.velocity.y) < 0.1f;
+        // Handle E key hold
+        if (Input.GetKey(KeyCode.E) && !isAttacking)
+        {
+            eKeyHeldTime += Time.deltaTime;
 
-        // Handle movement and jumping
-        if (isGrounded)
+            if (eKeyHeldTime >= holdThreshold && !holdTriggered)
+            {
+                TriggerAttack(AttackType.Heavy);
+                holdTriggered = true;
+            }
+        }
+
+        // On E key down
+        if (Input.GetKeyDown(KeyCode.E) && !isAttacking)
+        {
+            eKeyHeldTime = 0f;
+            holdTriggered = false;
+        }
+
+        // On E key release before hold threshold
+        if (Input.GetKeyUp(KeyCode.E) && !isAttacking && !holdTriggered)
+        {
+            TriggerAttack(AttackType.Light);
+        }
+
+        // Handle movement only if not attacking (optional)
+        if (!isAttacking)
         {
             if (horizontal != 0)
             {
                 isRunning = true;
-                // Flip sprite based on direction
-                if (horizontal < 0)
-                {
-                    spriteRenderer.flipX = true;  // Flip sprite when moving left
-                }
-                else
-                {
-                    spriteRenderer.flipX = false; // Keep sprite facing right when moving right
-                }
+                spriteRenderer.flipX = horizontal < 0;
             }
             else
             {
                 isRunning = false;
             }
 
-            // Jumping
             if (Input.GetButtonDown("Jump") && isGrounded)
             {
-                rb.velocity = new Vector2(rb.velocity.x, jumpForce); // Apply jump force
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
                 isJumping = true;
             }
             else
             {
                 isJumping = false;
             }
+
+            rb.velocity = new Vector2(horizontal * moveSpeed, rb.velocity.y);
         }
 
-        // Attack logic (press 'E' key)
-        if (Input.GetKeyDown(KeyCode.E) && attackTimer <= 0f) // Press 'E' key and cooldown check
-        {
-            isAttacking = true;
-            attackTimer = attackCooldown; // Reset attack cooldown
-            Debug.Log("Attack triggered"); // Debugging log for attack trigger
-        }
-        else
-        {
-            isAttacking = false;
-        }
-
-        // Update sprite based on state
+        // Animation selection
         if (isAttacking)
         {
             AnimateAttack();
@@ -109,15 +124,23 @@ public class PlayerController : MonoBehaviour
         {
             AnimateIdle();
         }
+    }
 
-        // Apply horizontal movement
-        rb.velocity = new Vector2(horizontal * moveSpeed, rb.velocity.y);
+    void TriggerAttack(AttackType type)
+    {
+        currentAttack = type;
+        isAttacking = true;
+        attackTimer = attackCooldown;
+        attackFrame = 0;
+        timeSinceLastFrame = 0f;
     }
 
     void AnimateIdle()
     {
         timeSinceLastFrame += Time.deltaTime;
-        if (timeSinceLastFrame >= 0.1f) // Change sprite every 0.1 seconds
+        if (idleSprites.Length == 0) return;
+
+        if (timeSinceLastFrame >= 0.1f)
         {
             idleFrame = (idleFrame + 1) % idleSprites.Length;
             spriteRenderer.sprite = idleSprites[idleFrame];
@@ -128,7 +151,9 @@ public class PlayerController : MonoBehaviour
     void AnimateRun()
     {
         timeSinceLastFrame += Time.deltaTime;
-        if (timeSinceLastFrame >= 0.1f) // Change sprite every 0.1 seconds
+        if (runSprites.Length == 0) return;
+
+        if (timeSinceLastFrame >= 0.1f)
         {
             runFrame = (runFrame + 1) % runSprites.Length;
             spriteRenderer.sprite = runSprites[runFrame];
@@ -138,38 +163,30 @@ public class PlayerController : MonoBehaviour
 
     void AnimateJump()
     {
-        // You can add logic here for jumping animation if needed.
-        // This example assumes you only display the jump sprite.
-        spriteRenderer.sprite = jumpSprites[0];
+        if (jumpSprites.Length > 0)
+        {
+            spriteRenderer.sprite = jumpSprites[0];
+        }
     }
 
     void AnimateAttack()
     {
-        // Log to check if we enter this function
-        Debug.Log("Animating attack");
-
         timeSinceLastFrame += Time.deltaTime;
 
-        // Slowing down the animation to 0.2 seconds per frame
-        if (timeSinceLastFrame >= 0.2f)
+        Sprite[] currentSet = currentAttack == AttackType.Heavy ? attackSet2 : attackSet1;
+        if (currentSet.Length == 0) return;
+
+        if (timeSinceLastFrame >= 0.1f)
         {
-            if (attackSet1.Length > 0)
-            {
-                attackFrame = (attackFrame + 1) % attackSet1.Length; // Cycle through attackSet1 sprites
-                spriteRenderer.sprite = attackSet1[attackFrame];
-
-                // Log to check which sprite is being used
-                Debug.Log("Current Attack Sprite: " + attackSet1[attackFrame].name);
-            }
-
+            spriteRenderer.sprite = currentSet[attackFrame];
+            attackFrame++;
             timeSinceLastFrame = 0f;
-        }
-    }
 
-    void Attack()
-    {
-        // This function can be used to handle attack-specific logic, 
-        // like dealing damage, playing sounds, etc.
-        // Animation will be handled by AnimateAttack().
+            if (attackFrame >= currentSet.Length)
+            {
+                isAttacking = false;
+                currentAttack = AttackType.None;
+            }
+        }
     }
 }

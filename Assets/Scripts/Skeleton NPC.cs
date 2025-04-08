@@ -2,123 +2,110 @@ using UnityEngine;
 
 public class SkeletonAI : MonoBehaviour
 {
-    public float moveSpeed = 2f;          // Speed at which the skeleton moves
-    public float attackRange = 1.5f;      // Range at which the skeleton will attack the player
-    public float attackCooldown = 1.5f;   // Time between consecutive attacks
-    public int damage = 1;                // Amount of damage the skeleton does
-
-    // Arrays to hold the animation frames for different actions
     public Sprite[] idleSprites;
     public Sprite[] walkSprites;
-    public Sprite[] attackSprites;
+    public Sprite[] attackSet1; // Light attack
 
-    private Transform player;             // Reference to the player's transform
+    public float moveSpeed = 2f;
+    public float attackRange = 1.5f;
+    public float detectionRange = 5f;
+
+    private Transform player;
     private SpriteRenderer spriteRenderer;
-    private float attackTimer;
-    private float frameTimer;
-    private int animFrame;
+    private float lastAttackTime = -1f;
+    private int currentFrame = 0;
+    private bool isAnimating = false;
+    private string currentAnimation = "Idle"; // Default state
 
-    private enum State { Idle, Walk, Attack }
-    private State currentState = State.Idle;
-
-    void Start()
+    private void Start()
     {
-        // Find the player in the scene by tag
-        player = GameObject.FindGameObjectWithTag("Player")?.transform;
+        player = GameObject.FindWithTag("Player").transform;  // Find the player by tag
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    void Update()
+    private void Update()
     {
-        // Only proceed if the player exists
-        if (player == null) return;
+        float distanceToPlayer = Vector2.Distance(transform.position, player.position);
 
-        // Get the distance from the player
-        float distance = Vector2.Distance(transform.position, player.position);
-
-        // If we're in attack range
-        if (distance <= attackRange)
+        // If within attack range, attack the player
+        if (distanceToPlayer <= attackRange)
         {
-            currentState = State.Attack;
-
-            if (attackTimer <= 0f)
-            {
-                Attack();
-                attackTimer = attackCooldown;
-            }
+            SetAnimationState("Attack1");  // Light attack
+            AttackPlayer();
         }
+        // If within detection range, move towards the player
+        else if (distanceToPlayer <= detectionRange)
+        {
+            SetAnimationState("Walk");
+            MoveTowardsPlayer();
+        }
+        // If outside of detection range, stay idle
         else
         {
-            // Change state to walk if outside attack range
-            currentState = State.Walk;
-
-            // Attempt to move the skeleton towards the player
-            Vector3 target = player.position;
-            Vector3 newPos = Vector2.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
-
-            // Debug: Show target position
-            Debug.Log("Moving towards: " + target);
-            Debug.DrawLine(transform.position, newPos, Color.red, 0.1f);  // Visualize movement line in Scene view
-
-            transform.position = newPos;  // Move the skeleton
-
-            // Flip the sprite based on direction
-            spriteRenderer.flipX = (player.position.x < transform.position.x);
+            SetAnimationState("Idle");
         }
 
-        // Reduce attack cooldown
-        attackTimer -= Time.deltaTime;
-
-        // Update animations
-        Animate();
+        // Handle sprite-based animations
+        HandleAnimation();
     }
 
-    // Function to handle the attack logic (deals damage to the player)
-    void Attack()
+    private void MoveTowardsPlayer()
     {
-        Debug.Log("Skeleton attacks!");
+        transform.position = Vector2.MoveTowards(transform.position, player.position, moveSpeed * Time.deltaTime);
+    }
 
-        // Assuming the player has a PlayerManager script with a TakeDamage method
-        PlayerManager pm = player.GetComponent<PlayerManager>();
-        if (pm != null)
+    private void AttackPlayer()
+    {
+        // Attack logic: Can add any attack effects here
+        if (Time.time - lastAttackTime >= 1f)  // Prevent attacking too quickly
         {
-            pm.TakeDamage(damage);
+            lastAttackTime = Time.time;
+            // For now, just play the attack animation
+            Debug.Log("Skeleton Attacks Player!");
         }
     }
 
-    // Function to animate the skeleton based on the current state
-    void Animate()
+    // Set the current animation state (Idle, Walk, Attack1, etc.)
+    private void SetAnimationState(string state)
     {
-        frameTimer += Time.deltaTime;
+        currentAnimation = state;
+    }
 
-        // Change the frame every 0.1 seconds
-        if (frameTimer >= 0.1f)
+    // Handle sprite animation switching
+    private void HandleAnimation()
+    {
+        switch (currentAnimation)
         {
-            frameTimer = 0f;
-            animFrame++;
-
-            // Get the current animation frames based on the state
-            Sprite[] currentSet = GetCurrentAnimation();
-
-            if (currentSet.Length > 0)
-            {
-                animFrame %= currentSet.Length;
-                spriteRenderer.sprite = currentSet[animFrame];
-            }
+            case "Idle":
+                PlayAnimation(idleSprites);
+                break;
+            case "Walk":
+                PlayAnimation(walkSprites);
+                break;
+            case "Attack1":
+                PlayAnimation(attackSet1);  // Light attack
+                break;
         }
     }
 
-    // Function to return the appropriate animation frames based on the current state
-    Sprite[] GetCurrentAnimation()
+    // Play animation by cycling through the sprites
+    private void PlayAnimation(Sprite[] animationFrames)
     {
-        switch (currentState)
+        if (animationFrames.Length == 0)
+            return;
+
+        // Switch frame every 0.1 seconds (you can tweak this for speed)
+        if (!isAnimating)
         {
-            case State.Walk:
-                return walkSprites;
-            case State.Attack:
-                return attackSprites;
-            default:
-                return idleSprites;
+            isAnimating = true;
+            currentFrame = (currentFrame + 1) % animationFrames.Length;
+            spriteRenderer.sprite = animationFrames[currentFrame];
+            Invoke(nameof(ResetAnimationFlag), 0.1f);
         }
+    }
+
+    private void ResetAnimationFlag()
+    {
+        isAnimating = false;
     }
 }

@@ -2,110 +2,201 @@ using UnityEngine;
 
 public class SkeletonAI : MonoBehaviour
 {
+    public float moveSpeed = 2f;
+    public float detectionRange = 5f;
+    public float attackRange = 1.2f;
+    public float attackCooldown = 1.5f;
+    public int damage = 1;
+    public int damageFrame = 1; // Frame where the hit connects
+
     public Sprite[] idleSprites;
     public Sprite[] walkSprites;
-    public Sprite[] attackSet1; // Light attack
+    public Sprite[] attackSprites;
+    public Sprite[] hurtSprites;
+    public Sprite[] deathSprites;
 
-    public float moveSpeed = 2f;
-    public float attackRange = 1.5f;
-    public float detectionRange = 5f;
+    public float frameRate = 0.1f;
 
     private Transform player;
-    private SpriteRenderer spriteRenderer;
-    private float lastAttackTime = -1f;
-    private int currentFrame = 0;
-    private bool isAnimating = false;
-    private string currentAnimation = "Idle"; // Default state
+    private SpriteRenderer sr;
+    private Rigidbody2D rb;
 
-    private void Start()
+    private float lastAttackTime;
+    private float animationTimer;
+    private int currentFrame;
+    private bool isDead = false;
+    private bool isAttacking = false;
+    private bool damageDealt = false;
+
+    // Health variables
+    public int maxHealth = 100;
+    public int currentHealth;
+
+    void Start()
     {
-        player = GameObject.FindWithTag("Player").transform;  // Find the player by tag
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        sr = GetComponent<SpriteRenderer>();
+        rb = GetComponent<Rigidbody2D>();
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        currentHealth = maxHealth; // Set health to max at the start
     }
 
-    private void Update()
+    private void Awake()
     {
-        float distanceToPlayer = Vector2.Distance(transform.position, player.position);
+        if (GetComponent<Collider2D>() == null)
+        {
+            Debug.LogError("No Collider2D found on " + name);
+        }
+    }
 
-        // If within attack range, attack the player
-        if (distanceToPlayer <= attackRange)
+    void Update()
+    {
+        if (isDead) return;
+
+        float dist = Vector2.Distance(transform.position, player.position);
+
+        if (currentHealth <= 0)
         {
-            SetAnimationState("Attack1");  // Light attack
-            AttackPlayer();
+            isDead = true;
+            currentFrame = 0;
+            animationTimer = 0f;
+            return;
         }
-        // If within detection range, move towards the player
-        else if (distanceToPlayer <= detectionRange)
+
+        if (isAttacking)
         {
-            SetAnimationState("Walk");
-            MoveTowardsPlayer();
+            AnimateAttack();
         }
-        // If outside of detection range, stay idle
+        else if (dist <= attackRange && Time.time - lastAttackTime >= attackCooldown)
+        {
+            StartAttack();
+        }
+        else if (dist <= detectionRange)
+        {
+            MoveTowardPlayer();
+        }
         else
         {
-            SetAnimationState("Idle");
+            Wander();
         }
-
-        // Handle sprite-based animations
-        HandleAnimation();
     }
 
-    private void MoveTowardsPlayer()
+    // Method to handle skeleton taking damage
+    public void TakeDamage(int damage)
     {
-        transform.position = Vector2.MoveTowards(transform.position, player.position, moveSpeed * Time.deltaTime);
-    }
+        if (isDead) return; // Prevent damage if skeleton is dead
 
-    private void AttackPlayer()
-    {
-        // Attack logic: Can add any attack effects here
-        if (Time.time - lastAttackTime >= 1f)  // Prevent attacking too quickly
+        currentHealth -= damage;
+
+        if (currentHealth <= 0)
         {
-            lastAttackTime = Time.time;
-            // For now, just play the attack animation
-            Debug.Log("Skeleton Attacks Player!");
+            Die();
         }
-    }
-
-    // Set the current animation state (Idle, Walk, Attack1, etc.)
-    private void SetAnimationState(string state)
-    {
-        currentAnimation = state;
-    }
-
-    // Handle sprite animation switching
-    private void HandleAnimation()
-    {
-        switch (currentAnimation)
+        else
         {
-            case "Idle":
-                PlayAnimation(idleSprites);
-                break;
-            case "Walk":
-                PlayAnimation(walkSprites);
-                break;
-            case "Attack1":
-                PlayAnimation(attackSet1);  // Light attack
-                break;
+            // Play hurt animation
+            AnimateHurt();
         }
     }
 
-    // Play animation by cycling through the sprites
-    private void PlayAnimation(Sprite[] animationFrames)
+    void Die()
     {
-        if (animationFrames.Length == 0)
-            return;
+        isDead = true;
+        // Trigger death animation or destroy object
+        Destroy(gameObject); // Destroy object for now (can replace with death animation)
+    }
 
-        // Switch frame every 0.1 seconds (you can tweak this for speed)
-        if (!isAnimating)
+    void AnimateHurt()
+    {
+        // Implement hurt animation here (e.g., change sprite, play hurt animation, etc.)
+    }
+
+    void StartAttack()
+    {
+        isAttacking = true;
+        animationTimer = 0f;
+        currentFrame = 0;
+        damageDealt = false;
+        lastAttackTime = Time.time;
+    }
+
+    void AnimateAttack()
+    {
+        animationTimer += Time.deltaTime;
+
+        if (animationTimer >= frameRate && currentFrame < attackSprites.Length)
         {
-            isAnimating = true;
-            currentFrame = (currentFrame + 1) % animationFrames.Length;
-            spriteRenderer.sprite = animationFrames[currentFrame];
-            Invoke(nameof(ResetAnimationFlag), 0.1f);
+            sr.sprite = attackSprites[currentFrame];
+
+            // Flip sprite
+            if (player.position.x < transform.position.x)
+                sr.flipX = true;
+            else
+                sr.flipX = false;
+
+            if (!damageDealt && currentFrame == damageFrame)
+            {
+                float dist = Vector2.Distance(transform.position, player.position);
+                if (dist <= attackRange)
+                {
+                    HealthSystem playerHealth = player.GetComponent<HealthSystem>();
+                    if (playerHealth != null)
+                    {
+                        playerHealth.TakeDamage(damage);
+                        Debug.Log("Skeleton hit player!");
+                    }
+                }
+                damageDealt = true;
+            }
+
+            currentFrame++;
+            animationTimer = 0f;
+
+            if (currentFrame >= attackSprites.Length)
+            {
+                isAttacking = false;
+            }
         }
     }
 
-    private void ResetAnimationFlag()
+    void MoveTowardPlayer()
     {
-        isAnimating = false;
+        Vector2 direction = (player.position - transform.position).normalized;
+        rb.velocity = new Vector2(direction.x * moveSpeed, rb.velocity.y);
+
+        AnimateWalk(direction.x);
+    }
+
+    void Wander()
+    {
+        rb.velocity = new Vector2(0f, rb.velocity.y);
+        AnimateIdle();
+    }
+
+    void AnimateWalk(float directionX)
+    {
+        animationTimer += Time.deltaTime;
+        if (walkSprites.Length == 0) return;
+
+        if (animationTimer >= frameRate)
+        {
+            currentFrame = (currentFrame + 1) % walkSprites.Length;
+            sr.sprite = walkSprites[currentFrame];
+            animationTimer = 0f;
+        }
+
+        sr.flipX = directionX < 0;
+    }
+
+    void AnimateIdle()
+    {
+        animationTimer += Time.deltaTime;
+        if (idleSprites.Length == 0) return;
+
+        if (animationTimer >= frameRate)
+        {
+            currentFrame = (currentFrame + 1) % idleSprites.Length;
+            sr.sprite = idleSprites[currentFrame];
+            animationTimer = 0f;
+        }
     }
 }

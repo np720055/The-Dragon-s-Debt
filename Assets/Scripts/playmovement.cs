@@ -11,6 +11,9 @@ public class PlayerController : MonoBehaviour
 
     public float moveSpeed = 5f;
     public float jumpForce = 5f;
+    public Transform attackPoint; // The point where the attack happens (e.g., sword tip)
+    public float attackRange = 1f; // Attack range for collision detection
+    public LayerMask enemyLayers; // Set this to the skeleton or enemy layers
 
     private SpriteRenderer spriteRenderer;
     private Rigidbody2D rb;
@@ -133,6 +136,7 @@ public class PlayerController : MonoBehaviour
         attackTimer = attackCooldown;
         attackFrame = 0;
         timeSinceLastFrame = 0f;
+        DealDamage();
     }
 
     void AnimateIdle()
@@ -188,5 +192,25 @@ public class PlayerController : MonoBehaviour
                 currentAttack = AttackType.None;
             }
         }
+    }
+
+    void DealDamage()
+    {
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+
+        foreach (var enemy in hitEnemies)
+        {
+            if (enemy.CompareTag("Skeleton")) // Ensure skeleton has "Skeleton" tag
+            {
+                enemy.GetComponent<SkeletonAI>().TakeDamage(10); // You can adjust the damage here
+            }
+        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (attackPoint == null) return;
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);  // Visualize attack radius
     }
 }

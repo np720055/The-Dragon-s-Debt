@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class SkeletonAI : MonoBehaviour
 {
@@ -7,7 +8,7 @@ public class SkeletonAI : MonoBehaviour
     public float attackRange = 1.2f;
     public float attackCooldown = 1.5f;
     public int damage = 1;
-    public int damageFrame = 1; // Frame where the hit connects
+    public int damageFrame = 1;
 
     public Sprite[] idleSprites;
     public Sprite[] walkSprites;
@@ -28,7 +29,6 @@ public class SkeletonAI : MonoBehaviour
     private bool isAttacking = false;
     private bool damageDealt = false;
 
-    // Health variables
     public int maxHealth = 100;
     public int currentHealth;
 
@@ -36,8 +36,8 @@ public class SkeletonAI : MonoBehaviour
     {
         sr = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
-        player = GameObject.FindGameObjectWithTag("Player").transform;
-        currentHealth = maxHealth; // Set health to max at the start
+        player = GameObject.FindGameObjectWithTag("Player")?.transform;
+        currentHealth = maxHealth;
     }
 
     private void Awake()
@@ -50,15 +50,13 @@ public class SkeletonAI : MonoBehaviour
 
     void Update()
     {
-        if (isDead) return;
+        if (isDead || player == null) return;
 
         float dist = Vector2.Distance(transform.position, player.position);
 
         if (currentHealth <= 0)
         {
-            isDead = true;
-            currentFrame = 0;
-            animationTimer = 0f;
+            Die();
             return;
         }
 
@@ -80,10 +78,9 @@ public class SkeletonAI : MonoBehaviour
         }
     }
 
-    // Method to handle skeleton taking damage
     public void TakeDamage(int damage)
     {
-        if (isDead) return; // Prevent damage if skeleton is dead
+        if (isDead) return;
 
         currentHealth -= damage;
 
@@ -93,21 +90,40 @@ public class SkeletonAI : MonoBehaviour
         }
         else
         {
-            // Play hurt animation
-            AnimateHurt();
+            StartCoroutine(HurtRoutine());
         }
     }
 
     void Die()
     {
         isDead = true;
-        // Trigger death animation or destroy object
-        Destroy(gameObject); // Destroy object for now (can replace with death animation)
+        rb.velocity = Vector2.zero;
+        GetComponent<Collider2D>().enabled = false;
+        StartCoroutine(DeathRoutine());
     }
 
-    void AnimateHurt()
+    IEnumerator DeathRoutine()
     {
-        // Implement hurt animation here (e.g., change sprite, play hurt animation, etc.)
+        int frame = 0;
+        while (frame < deathSprites.Length)
+        {
+            sr.sprite = deathSprites[frame];
+            frame++;
+            yield return new WaitForSeconds(frameRate);
+        }
+
+        Destroy(gameObject);
+    }
+
+    IEnumerator HurtRoutine()
+    {
+        int frame = 0;
+        while (frame < hurtSprites.Length)
+        {
+            sr.sprite = hurtSprites[frame];
+            frame++;
+            yield return new WaitForSeconds(frameRate);
+        }
     }
 
     void StartAttack()
@@ -127,7 +143,6 @@ public class SkeletonAI : MonoBehaviour
         {
             sr.sprite = attackSprites[currentFrame];
 
-            // Flip sprite
             if (player.position.x < transform.position.x)
                 sr.flipX = true;
             else
@@ -162,7 +177,6 @@ public class SkeletonAI : MonoBehaviour
     {
         Vector2 direction = (player.position - transform.position).normalized;
         rb.velocity = new Vector2(direction.x * moveSpeed, rb.velocity.y);
-
         AnimateWalk(direction.x);
     }
 

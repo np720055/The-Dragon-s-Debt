@@ -11,9 +11,9 @@ public class PlayerController : MonoBehaviour
 
     public float moveSpeed = 5f;
     public float jumpForce = 5f;
-    public Transform attackPoint; // The point where the attack happens (e.g., sword tip)
-    public float attackRange = 1f; // Attack range for collision detection
-    public LayerMask enemyLayers; // Set this to the skeleton or enemy layers
+    public Transform attackPoint;
+    public float attackRange = 1f;
+    public LayerMask enemyLayers;
 
     private SpriteRenderer spriteRenderer;
     private Rigidbody2D rb;
@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded;
     private bool isAttacking;
 
-    // Animation timers/frames
+    // Animation state
     private float timeSinceLastFrame = 0f;
     private int idleFrame = 0;
     private int runFrame = 0;
@@ -50,20 +50,22 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        HandleInput();
+        UpdateAnimations();
+    }
+
+    void HandleInput()
+    {
         horizontal = Input.GetAxis("Horizontal");
         isGrounded = Mathf.Abs(rb.velocity.y) < 0.1f;
 
         // Update attack cooldown
-        if (attackTimer > 0f)
-        {
-            attackTimer -= Time.deltaTime;
-        }
+        if (attackTimer > 0f) attackTimer -= Time.deltaTime;
 
         // Handle E key hold
         if (Input.GetKey(KeyCode.E) && !isAttacking)
         {
             eKeyHeldTime += Time.deltaTime;
-
             if (eKeyHeldTime >= holdThreshold && !holdTriggered)
             {
                 TriggerAttack(AttackType.Heavy);
@@ -71,20 +73,18 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        // On E key down
         if (Input.GetKeyDown(KeyCode.E) && !isAttacking)
         {
             eKeyHeldTime = 0f;
             holdTriggered = false;
         }
 
-        // On E key release before hold threshold
         if (Input.GetKeyUp(KeyCode.E) && !isAttacking && !holdTriggered)
         {
             TriggerAttack(AttackType.Light);
         }
 
-        // Handle movement only if not attacking (optional)
+        // Movement only if not attacking
         if (!isAttacking)
         {
             if (horizontal != 0)
@@ -109,8 +109,20 @@ public class PlayerController : MonoBehaviour
 
             rb.velocity = new Vector2(horizontal * moveSpeed, rb.velocity.y);
         }
+    }
 
-        // Animation selection
+    void TriggerAttack(AttackType type)
+    {
+        currentAttack = type;
+        isAttacking = true;
+        attackTimer = attackCooldown;
+        attackFrame = 0;
+        timeSinceLastFrame = 0f;
+        DealDamage();
+    }
+
+    void UpdateAnimations()
+    {
         if (isAttacking)
         {
             AnimateAttack();
@@ -127,16 +139,6 @@ public class PlayerController : MonoBehaviour
         {
             AnimateIdle();
         }
-    }
-
-    void TriggerAttack(AttackType type)
-    {
-        currentAttack = type;
-        isAttacking = true;
-        attackTimer = attackCooldown;
-        attackFrame = 0;
-        timeSinceLastFrame = 0f;
-        DealDamage();
     }
 
     void AnimateIdle()
@@ -176,7 +178,6 @@ public class PlayerController : MonoBehaviour
     void AnimateAttack()
     {
         timeSinceLastFrame += Time.deltaTime;
-
         Sprite[] currentSet = currentAttack == AttackType.Heavy ? attackSet2 : attackSet1;
         if (currentSet.Length == 0) return;
 
@@ -200,9 +201,11 @@ public class PlayerController : MonoBehaviour
 
         foreach (var enemy in hitEnemies)
         {
-            if (enemy.CompareTag("Skeleton")) // Ensure skeleton has "Skeleton" tag
+            SkeletonAI skeleton = enemy.GetComponent<SkeletonAI>();
+            if (skeleton != null)
             {
-                enemy.GetComponent<SkeletonAI>().TakeDamage(10); // You can adjust the damage here
+                skeleton.TakeDamage(10); // You can easily change this value or add light/heavy multipliers here
+                Debug.Log("Hit skeleton!");
             }
         }
     }
@@ -211,6 +214,6 @@ public class PlayerController : MonoBehaviour
     {
         if (attackPoint == null) return;
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(attackPoint.position, attackRange);  // Visualize attack radius
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
 }

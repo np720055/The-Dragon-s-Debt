@@ -53,4 +53,31 @@ public class SoundEffectManager : MonoBehaviour
     {
         SetVolume(sfxSlider.value);
     }
+    public static void PlayAtPosition(string soundName, Vector3 position)
+    {
+        AudioClip clip = soundEffectLibrary.GetRandomClip(soundName);
+        if (clip != null)
+        {
+            AudioSource.PlayClipAtPoint(clip, position);
+        }
+    }
+    void PlayFootStep()
+    {
+        SoundEffectManager.PlayAtPosition("FootSteps", transform.position);
+    }
+    public static void PlayShieldBlock(Vector3 position)
+    {
+        // Get the clip from the SoundEffectLibrary (you can set it up for just one clip)
+        AudioClip shieldBlockClip = soundEffectLibrary.GetClipByName("ShieldBlock");
+
+        if (shieldBlockClip != null)
+        {
+            AudioSource.PlayClipAtPoint(shieldBlockClip, position);
+        }
+        else
+        {
+            Debug.LogWarning("Shield Block sound clip is missing from SoundEffectLibrary.");
+        }
+    }
+
 }

@@ -35,8 +35,20 @@ public class SoundEffectLibrary : MonoBehaviour
         }
         return null;
     }
+    public AudioClip GetClipByName(string name)
+    {
+        if (soundDictionary.ContainsKey(name))
+        {
+            List<AudioClip> audioClips = soundDictionary[name];
+            if (audioClips.Count > 0)
+            {
+                return audioClips[0]; 
+            }
+        }
+        return null;
+    }
 
-   
+
 }
 [System.Serializable]
 public struct SoundEffectGroup

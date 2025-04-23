@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class HealthSystem : MonoBehaviour
 {
-    public int maxHealth = 3;
+    public int maxHealth = 10;
     public Sprite[] hurtSprites;
     public Sprite[] deathSprites;
     public float animationFrameRate = 0.1f;

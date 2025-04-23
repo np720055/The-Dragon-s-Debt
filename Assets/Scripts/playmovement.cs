@@ -11,9 +11,6 @@ public class PlayerController : MonoBehaviour
 
     public float moveSpeed = 5f;
     public float jumpForce = 5f;
-    public Transform attackPoint;
-    public float attackRange = 1f;
-    public LayerMask enemyLayers;
 
     private SpriteRenderer spriteRenderer;
     private Rigidbody2D rb;
@@ -59,10 +56,8 @@ public class PlayerController : MonoBehaviour
         horizontal = Input.GetAxis("Horizontal");
         isGrounded = Mathf.Abs(rb.velocity.y) < 0.1f;
 
-        // Update attack cooldown
         if (attackTimer > 0f) attackTimer -= Time.deltaTime;
 
-        // Handle E key hold
         if (Input.GetKey(KeyCode.E) && !isAttacking)
         {
             eKeyHeldTime += Time.deltaTime;
@@ -84,7 +79,6 @@ public class PlayerController : MonoBehaviour
             TriggerAttack(AttackType.Light);
         }
 
-        // Movement only if not attacking
         if (!isAttacking)
         {
             if (horizontal != 0)
@@ -118,7 +112,6 @@ public class PlayerController : MonoBehaviour
         attackTimer = attackCooldown;
         attackFrame = 0;
         timeSinceLastFrame = 0f;
-        DealDamage();
     }
 
     void UpdateAnimations()
@@ -184,6 +177,8 @@ public class PlayerController : MonoBehaviour
         if (timeSinceLastFrame >= 0.1f)
         {
             spriteRenderer.sprite = currentSet[attackFrame];
+            GetComponent<PlayerAttack>()?.DealDamage(PlayerAttack.AttackType.Light); // or .Heavy
+
             attackFrame++;
             timeSinceLastFrame = 0f;
 
@@ -193,27 +188,5 @@ public class PlayerController : MonoBehaviour
                 currentAttack = AttackType.None;
             }
         }
-    }
-
-    void DealDamage()
-    {
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
-
-        foreach (var enemy in hitEnemies)
-        {
-            SkeletonAI skeleton = enemy.GetComponent<SkeletonAI>();
-            if (skeleton != null)
-            {
-                skeleton.TakeDamage(10); // You can easily change this value or add light/heavy multipliers here
-                Debug.Log("Hit skeleton!");
-            }
-        }
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        if (attackPoint == null) return;
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
 }

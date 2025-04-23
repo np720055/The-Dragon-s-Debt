@@ -23,13 +23,15 @@ public class SkeletonAI : MonoBehaviour
     private Rigidbody2D rb;
 
     private float lastAttackTime;
+    private float lastDamageTime; // Time when the skeleton last took damage
     private float animationTimer;
     private int currentFrame;
     private bool isDead = false;
     private bool isAttacking = false;
     private bool damageDealt = false;
+    private bool isCooldown = false;  // Flag to prevent immediate attacks after damage
 
-    public int maxHealth = 100;
+    public int maxHealth = 50;
     public int currentHealth;
 
     void Start()
@@ -60,6 +62,7 @@ public class SkeletonAI : MonoBehaviour
             return;
         }
 
+
         if (isAttacking)
         {
             AnimateAttack();
@@ -83,6 +86,10 @@ public class SkeletonAI : MonoBehaviour
         if (isDead) return;
 
         currentHealth -= damage;
+        Debug.Log("Skeleton took damage. Current health: " + currentHealth);
+
+        lastDamageTime = Time.time; // Track when damage was taken
+        isCooldown = true;  // Activate cooldown
 
         if (currentHealth <= 0)
         {
@@ -96,15 +103,22 @@ public class SkeletonAI : MonoBehaviour
 
     void Die()
     {
+        if (isDead) return;
+
+        Debug.Log("Skeleton died. Starting death animation.");
         isDead = true;
         rb.velocity = Vector2.zero;
+        rb.bodyType = RigidbodyType2D.Static; // Prevent falling
         GetComponent<Collider2D>().enabled = false;
+
         StartCoroutine(DeathRoutine());
     }
 
     IEnumerator DeathRoutine()
     {
         int frame = 0;
+        Debug.Log("Playing death animation...");
+
         while (frame < deathSprites.Length)
         {
             sr.sprite = deathSprites[frame];
@@ -112,6 +126,7 @@ public class SkeletonAI : MonoBehaviour
             yield return new WaitForSeconds(frameRate);
         }
 
+        yield return new WaitForSeconds(0.2f); // Optional delay before disappearing
         Destroy(gameObject);
     }
 

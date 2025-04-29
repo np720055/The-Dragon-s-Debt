@@ -108,7 +108,7 @@ public class SkeletonAI : MonoBehaviour
         Debug.Log("Skeleton died. Starting death animation.");
         isDead = true;
         rb.velocity = Vector2.zero;
-        rb.bodyType = RigidbodyType2D.Static; // Prevent falling
+        rb.bodyType = RigidbodyType2D.Static; 
         GetComponent<Collider2D>().enabled = false;
 
         StartCoroutine(DeathRoutine());
@@ -126,7 +126,7 @@ public class SkeletonAI : MonoBehaviour
             yield return new WaitForSeconds(frameRate);
         }
 
-        yield return new WaitForSeconds(0.2f); // Optional delay before disappearing
+        yield return new WaitForSeconds(0.2f); 
         Destroy(gameObject);
     }
 

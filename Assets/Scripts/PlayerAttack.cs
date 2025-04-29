@@ -17,12 +17,21 @@ public class PlayerAttack : MonoBehaviour
 
         foreach (var enemy in hitEnemies)
         {
+            int damage = (type == AttackType.Heavy) ? heavyAttackDamage : lightAttackDamage;
+
             SkeletonAI skeleton = enemy.GetComponent<SkeletonAI>();
             if (skeleton != null)
             {
-                int damage = (type == AttackType.Heavy) ? heavyAttackDamage : lightAttackDamage;
                 skeleton.TakeDamage(damage);
-                Debug.Log($"Dealt {damage} damage to skeleton.");
+                Debug.Log($"Dealt {damage} damage to Skeleton.");
+                continue;
+            }
+
+            HealthSystem health = enemy.GetComponent<HealthSystem>();
+            if (health != null)
+            {
+                health.TakeDamage(damage);
+                Debug.Log($"Dealt {damage} damage to Vortemar ");
             }
         }
     }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class HealthSystem : MonoBehaviour
 {
@@ -10,8 +11,6 @@ public class HealthSystem : MonoBehaviour
     public int currentHealth;
     private SpriteRenderer spriteRenderer;
     private bool isDead = false;
-    private int animFrame = 0;
-    private float nextAnimTime = 0f;
 
     private void Start()
     {
@@ -40,13 +39,14 @@ public class HealthSystem : MonoBehaviour
     {
         isDead = true;
         Debug.Log(gameObject.name + " died.");
-        StartCoroutine(PlayDeathAnimation());
-        // Optionally disable movement/AI here
-        if (TryGetComponent<SkeletonAI>(out var ai)) ai.enabled = false;
+
+        if (TryGetComponent<CharacterAI>(out var ai)) ai.OnDeath();
         if (TryGetComponent<PlayerController>(out var pc)) pc.enabled = false;
+
+        StartCoroutine(PlayDeathAnimation());
     }
 
-    private System.Collections.IEnumerator PlayHurtAnimation()
+    private IEnumerator PlayHurtAnimation()
     {
         for (int i = 0; i < hurtSprites.Length; i++)
         {
@@ -55,7 +55,7 @@ public class HealthSystem : MonoBehaviour
         }
     }
 
-    private System.Collections.IEnumerator PlayDeathAnimation()
+    private IEnumerator PlayDeathAnimation()
     {
         for (int i = 0; i < deathSprites.Length; i++)
         {
@@ -63,12 +63,11 @@ public class HealthSystem : MonoBehaviour
             yield return new WaitForSeconds(animationFrameRate);
         }
 
-        // Destroy after animation
         Destroy(gameObject);
     }
+
     public int GetCurrentHealth()
     {
         return currentHealth;
     }
-    
 }

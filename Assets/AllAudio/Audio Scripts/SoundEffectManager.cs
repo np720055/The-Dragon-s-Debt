@@ -67,7 +67,7 @@ public class SoundEffectManager : MonoBehaviour
     }
     public static void PlayShieldBlock(Vector3 position)
     {
-        // Get the clip from the SoundEffectLibrary (you can set it up for just one clip)
+      
         AudioClip shieldBlockClip = soundEffectLibrary.GetClipByName("ShieldBlock");
 
         if (shieldBlockClip != null)

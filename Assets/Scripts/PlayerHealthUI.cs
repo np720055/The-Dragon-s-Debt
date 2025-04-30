@@ -3,18 +3,17 @@ using UnityEngine.UI;
 
 public class PlayerHealthUI : MonoBehaviour
 {
-    public Slider playerHealthSlider;
     public HealthSystem playerHealth;
-
-    void Start()
-    {
-        if (playerHealth != null)
-            playerHealthSlider.maxValue = playerHealth.maxHealth;
-    }
+    public Image healthBarFill;
 
     void Update()
     {
-        if (playerHealth != null)
-            playerHealthSlider.value = playerHealth.currentHealth;
+        if (playerHealth != null && healthBarFill != null)
+        {
+            float fillAmount = (float)playerHealth.GetCurrentHealth() / playerHealth.maxHealth;
+            healthBarFill.fillAmount = fillAmount;
+            Debug.Log("Health: " + playerHealth.GetCurrentHealth());
+
+        }
     }
 }

@@ -1,0 +1,620 @@
+fileFormatVersion: 2
+guid: f9887ef8103f8e548ba3d31b32e5e59b
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: gargoylefireshootphase_0
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 23
+        width: 298
+        height: 127
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2eafe774b973a674384b19cb04ea409b
+      internalID: -650272810
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gargoylefireshootphase_1
+      rect:
+        serializedVersion: 2
+        x: 1019
+        y: 23
+        width: 332
+        height: 127
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d00c1c00b7d1bd46aa7d6dbc20889e4
+      internalID: -1639437495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gargoylefireshootphase_2
+      rect:
+        serializedVersion: 2
+        x: 1723
+        y: 23
+        width: 432
+        height: 127
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b378d4f58b3342468df7dc6b01102e0
+      internalID: -1464685381
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gargoylefireshootphase_3
+      rect:
+        serializedVersion: 2
+        x: 2487
+        y: 23
+        width: 465
+        height: 134
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf19d3f6d7232de42b21945a3b922aaa
+      internalID: 1077301883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gargoylefireshootphase_4
+      rect:
+        serializedVersion: 2
+        x: 3251
+        y: 23
+        width: 504
+        height: 147
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1ee7476e561a674c9562f052cb57f50
+      internalID: 2125385686
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gargoylefireshootphase_5
+      rect:
+        serializedVersion: 2
+        x: 4034
+        y: 17
+        width: 518
+        height: 166
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b2f8b24409288ec4ba010a35accd679e
+      internalID: -524141070
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gargoylefireshootphase_6
+      rect:
+        serializedVersion: 2
+        x: 4844
+        y: 17
+        width: 512
+        height: 166
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 761c02da3129f474a9eba07aca718ed1
+      internalID: 100321350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gargoylefireshootphase_7
+      rect:
+        serializedVersion: 2
+        x: 5608
+        y: 17
+        width: 545
+        height: 139
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7f09b2ba6bf63f45b1d5cb193d06356
+      internalID: -2052083447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gargoylefireshootphase_8
+      rect:
+        serializedVersion: 2
+        x: 6412
+        y: 17
+        width: 544
+        height: 133
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c5253fb206f5fa40b565077d26905a3
+      internalID: -2043665573
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gargoylefireshootphase_9
+      rect:
+        serializedVersion: 2
+        x: 7228
+        y: 23
+        width: 525
+        height: 127
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 19bc1d7a3aa3a4a4b89924c78cde06bd
+      internalID: -2062600895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gargoylefireshootphase_10
+      rect:
+        serializedVersion: 2
+        x: 8025
+        y: 17
+        width: 525
+        height: 133
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90f79e447d5ddea428a00d6308e162c0
+      internalID: 1429800792
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gargoylefireshootphase_11
+      rect:
+        serializedVersion: 2
+        x: 8842
+        y: 17
+        width: 511
+        height: 133
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 374baaeb76cdc0a4b8624f526f54a4db
+      internalID: 2052727497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gargoylefireshootphase_12
+      rect:
+        serializedVersion: 2
+        x: 9659
+        y: 23
+        width: 498
+        height: 127
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ee6054bac562f14384778db27337a71
+      internalID: 2054936336
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gargoylefireshootphase_13
+      rect:
+        serializedVersion: 2
+        x: 10449
+        y: 23
+        width: 505
+        height: 127
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc8701e401e892e4f8b58d453aae5ef9
+      internalID: 1669088788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gargoylefireshootphase_14
+      rect:
+        serializedVersion: 2
+        x: 11239
+        y: 30
+        width: 259
+        height: 127
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e0ded8fedfb75949b37c45dad045057
+      internalID: 161758678
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gargoylefireshootphase_15
+      rect:
+        serializedVersion: 2
+        x: 11512
+        y: 23
+        width: 239
+        height: 127
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f7d0905eedcfa54e9c323adfb1bc967
+      internalID: -540894686
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gargoylefireshootphase_16
+      rect:
+        serializedVersion: 2
+        x: 12023
+        y: 64
+        width: 272
+        height: 106
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b2088b60f2b1ccf4989ad34457e6905a
+      internalID: 1281747328
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gargoylefireshootphase_17
+      rect:
+        serializedVersion: 2
+        x: 12308
+        y: 23
+        width: 246
+        height: 127
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f8a22cccf0029d447a7c22a99bff8633
+      internalID: -24489338
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gargoylefireshootphase_18
+      rect:
+        serializedVersion: 2
+        x: 12827
+        y: 83
+        width: 178
+        height: 93
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c16c56e5ff4fc004eb579bfb1b2751b4
+      internalID: -1376312188
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gargoylefireshootphase_19
+      rect:
+        serializedVersion: 2
+        x: 13006
+        y: 130
+        width: 33
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 47a527da38db1cb409a631adf8680049
+      internalID: -1497105120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gargoylefireshootphase_20
+      rect:
+        serializedVersion: 2
+        x: 13066
+        y: 137
+        width: 19
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 54b1f50c09f5e4e45904f4b0a1235162
+      internalID: -1178444110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gargoylefireshootphase_21
+      rect:
+        serializedVersion: 2
+        x: 13112
+        y: 23
+        width: 239
+        height: 127
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69e9d3f699707ab4a95738b398a87698
+      internalID: -1317204924
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gargoylefireshootphase_22
+      rect:
+        serializedVersion: 2
+        x: 8836
+        y: 97
+        width: 26
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 34e17674b4ecd084aad31b9b4597956b
+      internalID: 293660490
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      gargoylefireshootphase_0: -650272810
+      gargoylefireshootphase_1: -1639437495
+      gargoylefireshootphase_10: 1429800792
+      gargoylefireshootphase_11: 2052727497
+      gargoylefireshootphase_12: 2054936336
+      gargoylefireshootphase_13: 1669088788
+      gargoylefireshootphase_14: 161758678
+      gargoylefireshootphase_15: -540894686
+      gargoylefireshootphase_16: 1281747328
+      gargoylefireshootphase_17: -24489338
+      gargoylefireshootphase_18: -1376312188
+      gargoylefireshootphase_19: -1497105120
+      gargoylefireshootphase_2: -1464685381
+      gargoylefireshootphase_20: -1178444110
+      gargoylefireshootphase_21: -1317204924
+      gargoylefireshootphase_22: 293660490
+      gargoylefireshootphase_3: 1077301883
+      gargoylefireshootphase_4: 2125385686
+      gargoylefireshootphase_5: -524141070
+      gargoylefireshootphase_6: 100321350
+      gargoylefireshootphase_7: -2052083447
+      gargoylefireshootphase_8: -2043665573
+      gargoylefireshootphase_9: -2062600895
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

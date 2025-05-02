@@ -1,0 +1,730 @@
+fileFormatVersion: 2
+guid: 60f3bf3a4b236884480fbfdbdc804d4b
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: gargoyledoubleattack_0
+      rect:
+        serializedVersion: 2
+        x: 293
+        y: 28
+        width: 255
+        height: 124
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f74ce206cd965ef4591bb951914e0511
+      internalID: -1408655641
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gargoyledoubleattack_1
+      rect:
+        serializedVersion: 2
+        x: 834
+        y: 28
+        width: 251
+        height: 124
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 737e487e829c4044fbf6a06dbf55203f
+      internalID: -322288093
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gargoyledoubleattack_2
+      rect:
+        serializedVersion: 2
+        x: 1375
+        y: 28
+        width: 251
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb2cc4c2413581d46b681cf64eb72bb4
+      internalID: 1085336333
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gargoyledoubleattack_3
+      rect:
+        serializedVersion: 2
+        x: 1921
+        y: 28
+        width: 246
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2bd179d1e933664448a2e24231125f6a
+      internalID: 1506806803
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gargoyledoubleattack_4
+      rect:
+        serializedVersion: 2
+        x: 2462
+        y: 28
+        width: 241
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b26d89274322f664b958fe345ea93e50
+      internalID: 1554606097
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gargoyledoubleattack_5
+      rect:
+        serializedVersion: 2
+        x: 2999
+        y: 28
+        width: 245
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 145b8f06fdcef1141be9b5dabf063b0c
+      internalID: -548621340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gargoyledoubleattack_6
+      rect:
+        serializedVersion: 2
+        x: 3540
+        y: 28
+        width: 245
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b1f5b4ead049b7243b0b87e313bad593
+      internalID: -1403087628
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gargoyledoubleattack_7
+      rect:
+        serializedVersion: 2
+        x: 4081
+        y: 28
+        width: 240
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f7b857282df13548b31cf48c4499766
+      internalID: 147611779
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gargoyledoubleattack_8
+      rect:
+        serializedVersion: 2
+        x: 4581
+        y: 18
+        width: 256
+        height: 169
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eccd9ee62f5c3b148a9a83c1febed02c
+      internalID: -1535454845
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gargoyledoubleattack_9
+      rect:
+        serializedVersion: 2
+        x: 5122
+        y: 13
+        width: 256
+        height: 174
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e580c5566bfacc243a34cc9ecdf783e2
+      internalID: 1810217643
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gargoyledoubleattack_10
+      rect:
+        serializedVersion: 2
+        x: 5458
+        y: 23
+        width: 439
+        height: 169
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46475cdcebf5302409cc976710f3779a
+      internalID: -2106850421
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gargoyledoubleattack_11
+      rect:
+        serializedVersion: 2
+        x: 5999
+        y: 23
+        width: 436
+        height: 169
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23a954d45d2084549841fcb990af389d
+      internalID: 959246363
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gargoyledoubleattack_12
+      rect:
+        serializedVersion: 2
+        x: 6540
+        y: 68
+        width: 110
+        height: 79
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a37e79ce78809324881927c80822d032
+      internalID: 1304350885
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gargoyledoubleattack_13
+      rect:
+        serializedVersion: 2
+        x: 6651
+        y: 133
+        width: 19
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 877d22fec335d144290b2b38fc6600cb
+      internalID: -176108735
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gargoyledoubleattack_14
+      rect:
+        serializedVersion: 2
+        x: 6676
+        y: 138
+        width: 25
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46eb0a4a1dcdef744b1a1566409fee87
+      internalID: 353867829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gargoyledoubleattack_15
+      rect:
+        serializedVersion: 2
+        x: 6706
+        y: 143
+        width: 20
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8990d57b79286db4893dd4d0faa76e8c
+      internalID: 727703824
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gargoyledoubleattack_16
+      rect:
+        serializedVersion: 2
+        x: 6726
+        y: 23
+        width: 250
+        height: 169
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e3b0488e2ae34849a8e39773266599b
+      internalID: 933137199
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gargoyledoubleattack_17
+      rect:
+        serializedVersion: 2
+        x: 7267
+        y: 23
+        width: 250
+        height: 169
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 50f8ccc93def45f4ab5868996d4818b2
+      internalID: 2074929862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gargoyledoubleattack_18
+      rect:
+        serializedVersion: 2
+        x: 7808
+        y: 23
+        width: 245
+        height: 169
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 51833c53f0291bc4cb2ab6e13c51ad5c
+      internalID: 54854833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gargoyledoubleattack_19
+      rect:
+        serializedVersion: 2
+        x: 8109
+        y: 23
+        width: 380
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 27ec58de186264640a1e8c6485e1a48c
+      internalID: -2049597957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gargoyledoubleattack_20
+      rect:
+        serializedVersion: 2
+        x: 8644
+        y: 23
+        width: 376
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 96941c61663c9dd4492c25c577c28a88
+      internalID: 274763728
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gargoyledoubleattack_21
+      rect:
+        serializedVersion: 2
+        x: 9313
+        y: 23
+        width: 248
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fff9df1a56284c143b79079b7b45628e
+      internalID: 493028862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gargoyledoubleattack_22
+      rect:
+        serializedVersion: 2
+        x: 9852
+        y: 23
+        width: 245
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3937f76afc8fbaf4ea86f098813da8b2
+      internalID: 2030370278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gargoyledoubleattack_23
+      rect:
+        serializedVersion: 2
+        x: 6656
+        y: 73
+        width: 34
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ba89262149494a4f87ad40b23516d36
+      internalID: 521067797
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gargoyledoubleattack_24
+      rect:
+        serializedVersion: 2
+        x: 9180
+        y: 68
+        width: 130
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f8047b9a477b074091d275989490ebc
+      internalID: 871628962
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gargoyledoubleattack_25
+      rect:
+        serializedVersion: 2
+        x: 9246
+        y: 63
+        width: 24
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 33bea8a4e410424449a56bb5dac985c0
+      internalID: 390825840
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gargoyledoubleattack_26
+      rect:
+        serializedVersion: 2
+        x: 9271
+        y: 63
+        width: 19
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6bba675b3355a6d4a98db8c345b548d7
+      internalID: 1675351747
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gargoyledoubleattack_27
+      rect:
+        serializedVersion: 2
+        x: 9296
+        y: 63
+        width: 35
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee8d70b75ae68c04080be9f13f4f5354
+      internalID: 1279956824
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      gargoyledoubleattack_0: -1408655641
+      gargoyledoubleattack_1: -322288093
+      gargoyledoubleattack_10: -2106850421
+      gargoyledoubleattack_11: 959246363
+      gargoyledoubleattack_12: 1304350885
+      gargoyledoubleattack_13: -176108735
+      gargoyledoubleattack_14: 353867829
+      gargoyledoubleattack_15: 727703824
+      gargoyledoubleattack_16: 933137199
+      gargoyledoubleattack_17: 2074929862
+      gargoyledoubleattack_18: 54854833
+      gargoyledoubleattack_19: -2049597957
+      gargoyledoubleattack_2: 1085336333
+      gargoyledoubleattack_20: 274763728
+      gargoyledoubleattack_21: 493028862
+      gargoyledoubleattack_22: 2030370278
+      gargoyledoubleattack_23: 521067797
+      gargoyledoubleattack_24: 871628962
+      gargoyledoubleattack_25: 390825840
+      gargoyledoubleattack_26: 1675351747
+      gargoyledoubleattack_27: 1279956824
+      gargoyledoubleattack_3: 1506806803
+      gargoyledoubleattack_4: 1554606097
+      gargoyledoubleattack_5: -548621340
+      gargoyledoubleattack_6: -1403087628
+      gargoyledoubleattack_7: 147611779
+      gargoyledoubleattack_8: -1535454845
+      gargoyledoubleattack_9: 1810217643
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

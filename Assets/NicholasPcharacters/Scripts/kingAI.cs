@@ -174,5 +174,20 @@ public class CharacterAI : MonoBehaviour
         rb.velocity = Vector2.zero;
         rb.bodyType = RigidbodyType2D.Static;
         GetComponent<Collider2D>().enabled = false;
+
+        GiveUpgradePoint();
+    }
+
+    private void GiveUpgradePoint()
+    {
+        GameObject npc = GameObject.FindWithTag("UpgradeNPC");
+        if (npc != null)
+        {
+            StatUpgradeNPC upgradeNPC = npc.GetComponent<StatUpgradeNPC>();
+            if (upgradeNPC != null)
+            {
+                upgradeNPC.AddPoints(10);
+            }
+        }
     }
 }

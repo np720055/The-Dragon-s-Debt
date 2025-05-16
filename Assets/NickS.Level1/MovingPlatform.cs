@@ -1,66 +1,49 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class MovingPlatformWithTriggers : MonoBehaviour
+public class MovingPlatform : MonoBehaviour
 {
-    public float speed = 3f;          // Speed at which the platform moves
-    public Transform pointA;          // Position A
-    public Transform pointB;          // Position B
-    private Vector3 targetPosition;   // The current target position
-    private bool movingToB = true;    // Flag to determine the current direction
+    public enum MovementType { Horizontal, Vertical, Both }
+    public MovementType movementType = MovementType.Both; // Set this in the Inspector for each platform
 
-    private Rigidbody2D rb;           // Reference to the Rigidbody2D component
+    public float amplitudeX = 2f;  // Horizontal movement distance
+    public float amplitudeY = 2f;  // Vertical movement distance
+    public float speed = 2f;       // Speed of movement
+    public float curveFrequency = 1f; // Frequency of the sine wave curve
+
+    private Vector3 startPos;
 
     void Start()
     {
-        // Get the Rigidbody2D component (if applicable)
-        rb = GetComponent<Rigidbody2D>();
-
-        // Ensure the Rigidbody2D is set to Kinematic (it won't be affected by forces)
-        rb.bodyType = RigidbodyType2D.Kinematic;
-
-        // Initially set the target position to pointB or pointA
-        targetPosition = pointB.position; // Start moving to pointB
+        startPos = transform.position;
     }
 
-    void FixedUpdate()
+    void Update()
     {
-        // Smoothly move the platform along the X-axis while maintaining the fixed Y position
-        Vector3 fixedPosition = new Vector3(targetPosition.x, transform.position.y, transform.position.z);
-        rb.MovePosition(Vector3.MoveTowards(transform.position, fixedPosition, speed * Time.deltaTime));
-    }
+        // Default offsets
+        float offsetX = 0f;
+        float offsetY = 0f;
 
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        // Log when colliding with PointA or PointB
-        if (other.CompareTag("PointA") && !movingToB)
+        // Calculate the curve motion for each movement type
+        switch (movementType)
         {
-            Debug.Log("Collided with PointA, moving to PointB.");
-            movingToB = true; // Switch direction to move to pointB
-            targetPosition = pointB.position; // Set target to pointB
-        }
-        else if (other.CompareTag("PointB") && movingToB)
-        {
-            Debug.Log("Collided with PointB, moving to PointA.");
-            movingToB = false; // Switch direction to move to pointA
-            targetPosition = pointA.position; // Set target to pointA
-        }
-    }
+            case MovementType.Horizontal:
+                offsetX = Mathf.Sin(Time.time * speed) * amplitudeX;  // Horizontal sine wave movement
+                break;
 
-    void OnTriggerStay2D(Collider2D other)
-    {
-        // Optional: Log when the platform stays within the trigger collider
-        if (other.CompareTag("PointA") || other.CompareTag("PointB"))
-        {
-            Debug.Log("Platform is inside the trigger: " + other.gameObject.name);
-        }
-    }
+            case MovementType.Vertical:
+                offsetY = Mathf.Sin(Time.time * speed) * amplitudeY;  // Vertical sine wave movement
+                break;
 
-    void OnTriggerExit2D(Collider2D other)
-    {
-        // Optional: Log when the platform exits a trigger
-        if (other.CompareTag("PointA") || other.CompareTag("PointB"))
-        {
-            Debug.Log("Platform exited the trigger: " + other.gameObject.name);
+            case MovementType.Both:
+                // Both horizontal and vertical sine wave movement
+                offsetX = Mathf.Sin(Time.time * speed) * amplitudeX; // Horizontal sine wave movement
+                offsetY = Mathf.Sin(Time.time * speed * curveFrequency) * amplitudeY; // Vertical sine wave (with curve frequency)
+                break;
         }
+
+        // Apply the calculated offsets to create curving movement
+        transform.position = startPos + new Vector3(offsetX, offsetY, 0);
     }
 }

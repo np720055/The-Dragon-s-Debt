@@ -220,7 +220,7 @@ public class DragonAI : MonoBehaviour
             StatUpgradeNPC upgradeNPC = npc.GetComponent<StatUpgradeNPC>();
             if (upgradeNPC != null)
             {
-                upgradeNPC.AddPoints(10);
+                upgradeNPC.AddPoints(30);
             }
         }
     }

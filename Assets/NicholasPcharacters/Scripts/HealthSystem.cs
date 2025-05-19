@@ -73,12 +73,24 @@ public class HealthSystem : MonoBehaviour
             yield return new WaitForSeconds(animationFrameRate);
         }
 
-        // After the death animation, destroy the object (only for dragons)
-
+        // For non-dragon enemies, trigger their OnDeath logic
+        if (gameObject.name != "Dragon")
+        {
+            CharacterAI ai = GetComponent<CharacterAI>();
+            if (ai != null)
+            {
+                ai.OnDeath();
+            }
+        }
     }
 
     public int GetCurrentHealth()
     {
         return currentHealth;
     }
+    public bool IsDead()
+    {
+        return isDead;
+    }
+
 }

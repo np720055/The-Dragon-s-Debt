@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 
 public class CharacterAI : MonoBehaviour
 {
@@ -14,12 +13,15 @@ public class CharacterAI : MonoBehaviour
     [Header("Animations")]
     public Sprite[] idleSprites;
     public Sprite[] walkSprites;
-    public Sprite[] jumpSprites;
-    public Sprite[] fallSprites;
     public Sprite[] attack1Sprites;
     public Sprite[] attack2Sprites;
     public Sprite[] attack3Sprites;
     public float frameRate = 0.1f;
+
+    [Header("Patrol")]
+    public float patrolDistance = 3f;
+    public float patrolSpeed = 1.5f;
+    public float patrolWaitTime = 1.5f;
 
     private Transform player;
     private SpriteRenderer sr;
@@ -32,25 +34,41 @@ public class CharacterAI : MonoBehaviour
     private bool isAttacking = false;
     private bool damageDealt = false;
 
-    private int attackIndex = 0; // 0 = attack1, 1 = attack2, 2 = attack3
+    private int attackIndex = 0;
     private Sprite[] currentAttackSprites;
+
+    // Patrol state
+    private Vector2 patrolLeftEdge;
+    private Vector2 patrolRightEdge;
+    private int patrolDirection = 1; // 1 = right, -1 = left
+    private float waitTimer = 0f;
+    private bool waiting = false;
 
     void Start()
     {
         sr = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
+
+        // Setup patrol range
+        patrolLeftEdge = transform.position - Vector3.right * patrolDistance;
+        patrolRightEdge = transform.position + Vector3.right * patrolDistance;
     }
 
     void Update()
     {
         if (isDead || player == null) return;
 
+        var health = GetComponent<HealthSystem>();
+        if (health != null && health.IsDead()) return;
+
+
+
         float dist = Vector2.Distance(transform.position, player.position);
 
         if (isAttacking)
         {
-            AnimateAttack(currentAttackSprites); // Use the current attack set
+            AnimateAttack(currentAttackSprites);
         }
         else if (dist <= attackRange && Time.time - lastAttackTime >= attackCooldown)
         {
@@ -62,7 +80,7 @@ public class CharacterAI : MonoBehaviour
         }
         else
         {
-            Wander();
+            Patrol();
         }
     }
 
@@ -73,10 +91,35 @@ public class CharacterAI : MonoBehaviour
         AnimateWalk(direction.x);
     }
 
-    void Wander()
+    void Patrol()
     {
-        rb.velocity = Vector2.zero;
-        AnimateIdle();
+        if (waiting)
+        {
+            waitTimer += Time.deltaTime;
+            rb.velocity = Vector2.zero;
+            AnimateIdle();
+
+            if (waitTimer >= patrolWaitTime)
+            {
+                waiting = false;
+                patrolDirection *= -1;
+                waitTimer = 0f;
+            }
+            return;
+        }
+
+        float nextX = transform.position.x + patrolDirection * patrolSpeed * Time.deltaTime;
+
+        if (patrolDirection == 1 && nextX >= patrolRightEdge.x ||
+            patrolDirection == -1 && nextX <= patrolLeftEdge.x)
+        {
+            waiting = true;
+            rb.velocity = Vector2.zero;
+            return;
+        }
+
+        rb.velocity = new Vector2(patrolDirection * patrolSpeed, rb.velocity.y);
+        AnimateWalk(patrolDirection);
     }
 
     void StartAttack()
@@ -87,7 +130,7 @@ public class CharacterAI : MonoBehaviour
         damageDealt = false;
         lastAttackTime = Time.time;
 
-        currentAttackSprites = GetNextAttack(); // Assign the correct attack sprites
+        currentAttackSprites = GetNextAttack();
     }
 
     Sprite[] GetNextAttack()
@@ -101,7 +144,7 @@ public class CharacterAI : MonoBehaviour
             case 2: result = attack3Sprites; break;
         }
 
-        attackIndex = (attackIndex + 1) % 3; // Cycle to next attack
+        attackIndex = (attackIndex + 1) % 3;
         return result;
     }
 
@@ -115,7 +158,6 @@ public class CharacterAI : MonoBehaviour
             if (currentFrame < attackSprites.Length)
             {
                 sr.sprite = attackSprites[currentFrame];
-
                 sr.flipX = (player.position.x < transform.position.x);
 
                 if (!damageDealt && currentFrame == damageFrame)
@@ -186,7 +228,7 @@ public class CharacterAI : MonoBehaviour
             StatUpgradeNPC upgradeNPC = npc.GetComponent<StatUpgradeNPC>();
             if (upgradeNPC != null)
             {
-                upgradeNPC.AddPoints(10);
+                upgradeNPC.AddPoints(50);
             }
         }
     }

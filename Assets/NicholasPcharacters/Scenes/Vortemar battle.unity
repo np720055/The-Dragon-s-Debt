@@ -1030,7 +1030,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111e59a91898218429501bf7a6aad421, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 40
+  maxHealth: 20
   hurtSprites:
   - {fileID: -1914558300, guid: 49641e98733e6df48b27686e5302fa36, type: 3}
   - {fileID: -1176305458, guid: 49641e98733e6df48b27686e5302fa36, type: 3}
@@ -1081,12 +1081,6 @@ MonoBehaviour:
   - {fileID: -1366226211, guid: f2286544f94a57f45934ba5f61008953, type: 3}
   - {fileID: 852303377, guid: f2286544f94a57f45934ba5f61008953, type: 3}
   - {fileID: -840847561, guid: f2286544f94a57f45934ba5f61008953, type: 3}
-  jumpSprites:
-  - {fileID: 1345095335, guid: 679eb409ae56e284a84ca40e07f4897e, type: 3}
-  - {fileID: 1132769936, guid: 679eb409ae56e284a84ca40e07f4897e, type: 3}
-  fallSprites:
-  - {fileID: 493883952, guid: 3307256b4e1362342a82dafefedeaff8, type: 3}
-  - {fileID: -80942735, guid: 3307256b4e1362342a82dafefedeaff8, type: 3}
   attack1Sprites:
   - {fileID: 2040209728, guid: 23f28119967f6f7478b71034caeddc0a, type: 3}
   - {fileID: -1004080921, guid: 23f28119967f6f7478b71034caeddc0a, type: 3}
@@ -1103,6 +1097,9 @@ MonoBehaviour:
   - {fileID: -414690346, guid: ac2425dcf9ca7f740a2e916fbff2acda, type: 3}
   - {fileID: -951477294, guid: ac2425dcf9ca7f740a2e916fbff2acda, type: 3}
   frameRate: 0.1
+  patrolDistance: 3
+  patrolSpeed: 1.5
+  patrolWaitTime: 2
 --- !u!1 &1541459258
 GameObject:
   m_ObjectHideFlags: 0

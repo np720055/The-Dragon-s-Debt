@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 
 public class SkeletonAI : MonoBehaviour
@@ -112,6 +112,9 @@ public class SkeletonAI : MonoBehaviour
         GetComponent<Collider2D>().enabled = false;
 
         StartCoroutine(DeathRoutine());
+
+        GiveUpgradePoint();
+
     }
 
     IEnumerator DeathRoutine()
@@ -228,4 +231,18 @@ public class SkeletonAI : MonoBehaviour
             animationTimer = 0f;
         }
     }
+    private void GiveUpgradePoint()
+    {
+        GameObject npc = GameObject.FindWithTag("UpgradeNPC");
+        if (npc != null)
+        {
+            StatUpgradeNPC upgradeNPC = npc.GetComponent<StatUpgradeNPC>();
+            if (upgradeNPC != null)
+            {
+                upgradeNPC.AddPoints(10); 
+            }
+        }
+    }
+
+
 }

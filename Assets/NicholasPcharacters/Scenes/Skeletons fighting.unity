@@ -1166,7 +1166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111e59a91898218429501bf7a6aad421, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 3
+  maxHealth: 10
   hurtSprites:
   - {fileID: 21300000, guid: 2d8faa8a9b03a4144a48e64e67ef02fc, type: 3}
   - {fileID: 21300000, guid: 48c2522a1e3ca244ea57bc16d34e4163, type: 3}

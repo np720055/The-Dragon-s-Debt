@@ -40,7 +40,17 @@ public class HealthSystem : MonoBehaviour
         isDead = true;
         Debug.Log(gameObject.name + " died.");
 
-        if (TryGetComponent<CharacterAI>(out var ai)) ai.OnDeath();
+        // If this is a dragon, trigger the dragon death animation
+        if (gameObject.name == "Dragon")
+        {
+            DragonAI dragonAI = GetComponent<DragonAI>();
+            if (dragonAI != null)
+            {
+                dragonAI.OnDeath();  // Call the DragonAI's OnDeath method
+            }
+        }
+
+        // Disable player or character controller if necessary (e.g., for player)
         if (TryGetComponent<PlayerController>(out var pc)) pc.enabled = false;
 
         StartCoroutine(PlayDeathAnimation());
@@ -63,11 +73,24 @@ public class HealthSystem : MonoBehaviour
             yield return new WaitForSeconds(animationFrameRate);
         }
 
-        Destroy(gameObject);
+        // For non-dragon enemies, trigger their OnDeath logic
+        if (gameObject.name != "Dragon")
+        {
+            CharacterAI ai = GetComponent<CharacterAI>();
+            if (ai != null)
+            {
+                ai.OnDeath();
+            }
+        }
     }
 
     public int GetCurrentHealth()
     {
         return currentHealth;
     }
+    public bool IsDead()
+    {
+        return isDead;
+    }
+
 }

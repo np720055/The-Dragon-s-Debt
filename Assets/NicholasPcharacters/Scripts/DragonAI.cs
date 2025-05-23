@@ -38,6 +38,8 @@ public class DragonAI : MonoBehaviour
     private float patrolTimer = 0f;
     private float patrolDirectionChangeTime = 3f;
 
+    private bool facingLeft;
+
     void Start()
     {
         sr = GetComponent<SpriteRenderer>();
@@ -85,6 +87,7 @@ public class DragonAI : MonoBehaviour
     {
         Vector2 direction = (player.position - transform.position).normalized;
         rb.velocity = new Vector2(direction.x * moveSpeed, rb.velocity.y);
+        UpdateFacingDirection(player.position);
         AnimateWalk(rb.velocity.x);
     }
 
@@ -103,6 +106,7 @@ public class DragonAI : MonoBehaviour
         }
     }
 
+
     void StartAttack()
     {
         isAttacking = true;
@@ -111,21 +115,14 @@ public class DragonAI : MonoBehaviour
         damageDealt = false;
         lastAttackTime = Time.time;
 
+        UpdateFacingDirection(player.position);
         currentAttackSprites = GetNextAttack();
+
     }
 
     Sprite[] GetNextAttack()
     {
-        Sprite[] result;
-        if (attackIndex == 0)
-        {
-            result = attack1Sprites;
-        }
-        else
-        {
-            result = attack2Sprites;
-        }
-
+        Sprite[] result = (attackIndex == 0) ? attack1Sprites : attack2Sprites;
         attackIndex = (attackIndex + 1) % 2;
         return result;
     }
@@ -140,7 +137,10 @@ public class DragonAI : MonoBehaviour
             if (currentFrame < attackSprites.Length)
             {
                 sr.sprite = attackSprites[currentFrame];
-                sr.flipX = (player.position.x < transform.position.x);
+
+                // Flip to face the player – adjust depending on sprite's default
+                sr.flipX = (player.position.x > transform.position.x); // If facing right by default
+                                                                       // sr.flipX = (player.position.x > transform.position.x); // If facing left by default
 
                 if (!damageDealt && currentFrame == damageFrame)
                 {
@@ -164,6 +164,8 @@ public class DragonAI : MonoBehaviour
         }
     }
 
+
+
     void AnimateWalk(float velocityX)
     {
         if (walkSprites.Length == 0) return;
@@ -179,8 +181,14 @@ public class DragonAI : MonoBehaviour
         if (Mathf.Abs(velocityX) > 0.01f)
         {
             sr.flipX = velocityX > 0f;
-
         }
+    }
+
+
+void UpdateFacingDirection(Vector3 targetPosition)
+    {
+        facingLeft = targetPosition.x < transform.position.x;
+        sr.flipX = facingLeft;
     }
 
     public void OnDeath()
@@ -199,11 +207,11 @@ public class DragonAI : MonoBehaviour
     {
         currentFrame = 0;
         animationTimer = 0f;
+        UpdateFacingDirection(player.position);
 
         while (currentFrame < deathSprites.Length)
         {
             sr.sprite = deathSprites[currentFrame];
-            sr.flipX = (player.position.x < transform.position.x);
             currentFrame++;
             yield return new WaitForSeconds(frameRate);
         }

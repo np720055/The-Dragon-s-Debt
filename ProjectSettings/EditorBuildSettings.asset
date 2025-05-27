@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Skeletons fighting.unity
+    path: Assets/NicholasPcharacters/Scenes/Skeletons fighting.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/NicholasPcharacters/Scenes/SampleScene 1.unity
+    guid: 384dd04af8026d440adcf4ad7b07553b
+  - enabled: 1
+    path: Assets/NickS.Level1/NickS.Scenes/Castle Halls.unity
+    guid: 0f46e241e72ca404b95d8db15ca22cca
   m_configObjects: {}
